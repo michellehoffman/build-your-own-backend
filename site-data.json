@@ -1,0 +1,260 @@
+[
+  {
+    "city": "Littleton",
+    "county": "Jefferson",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110060948453",
+    "site_name": "Air Force Plant PJKS"
+  },
+  {
+    "city": "Arvada",
+    "county": "Jefferson",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110027855408",
+    "site_name": "Arvada Treatment Center"
+  },
+  {
+    "city": "Aurora",
+    "county": "Adams",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110012373369",
+    "site_name": "Chase Terminal Co.Cn"
+  },
+  {
+    "city": "Deer Trail",
+    "county": "Adams",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110060947329",
+    "site_name": "Clean Harbors Deer Trail, LLC."
+  },
+  {
+    "city": "Denver",
+    "county": "Denver",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000610562",
+    "site_name": "Colo Dept of Trans HQ Complex"
+  },
+  {
+    "city": "Fort Collins",
+    "county": "Larimer",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110001138457",
+    "site_name": "Colorado State University (Disposal)"
+  },
+  {
+    "city": "Fort Collins",
+    "county": "Larimer",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110064305363",
+    "site_name": "Colorado State University"
+  },
+  {
+    "city": "Salida",
+    "county": "Chaffee",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110022508473",
+    "site_name": "Cozinco (Archived)"
+  },
+  {
+    "city": "Aurora",
+    "county": "Arapahoe",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000610410",
+    "site_name": "Denver Arapahoe Chemical Waste Process Fac"
+  },
+  {
+    "city": "Boulder",
+    "county": "Boulder",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000467218",
+    "site_name": "Dover Industries Inc (was Dieterich)"
+  },
+  {
+    "city": "Littleton",
+    "county": "Douglas",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000610544",
+    "site_name": "Ensign Bickford Co"
+  },
+  {
+    "city": "Pueblo",
+    "county": "Pueblo",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000467833",
+    "site_name": "Evraz Rocky Mountain Steel"
+  },
+  {
+    "city": "Louviers",
+    "county": "Douglas",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000610447",
+    "site_name": "Explosives Tech International"
+  },
+  {
+    "city": "Denver",
+    "county": "Denver",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110001606030",
+    "site_name": "FHWA Central Direct Fed. Div Materials"
+  },
+  {
+    "city": "Denver",
+    "county": "Denver",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000749931",
+    "site_name": "Former Redfield Site"
+  },
+  {
+    "city": "Lakewood",
+    "county": "Jefferson",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110002042361",
+    "site_name": "General Services Administration"
+  },
+  {
+    "city": "Denver",
+    "county": "Adams",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000467094",
+    "site_name": "Hamilton Sundstrand Facility"
+  },
+  {
+    "city": "Windsor",
+    "county": "Weld",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000467502",
+    "site_name": "Kodak Colorado Div"
+  },
+  {
+    "city": "Denver",
+    "county": "Adams",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110013817325",
+    "site_name": "Koppers Inc (Denver Co)"
+  },
+  {
+    "city": "Littleton",
+    "county": "Douglas",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000610429",
+    "site_name": "Lockheed Martin Space Systems"
+  },
+  {
+    "city": "Commerce City",
+    "county": "Adams",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000610535",
+    "site_name": "Mai Approved Oil Service Inc"
+  },
+  {
+    "city": "Broomfield",
+    "county": "Broomfield",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110043644376",
+    "site_name": "Microsemi Consortium Facility/Microsemi Consortium C/O Brian McGinnis (FMC Corp)"
+  },
+  {
+    "city": "Colorado Springs",
+    "county": "El Paso",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000467744",
+    "site_name": "Mobile Energy Products"
+  },
+  {
+    "city": "Aurora",
+    "county": "Arapahoe",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000466549",
+    "site_name": "O E A"
+  },
+  {
+    "city": "Denver",
+    "county": "Denver",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110054142067",
+    "site_name": "Power Engineering"
+  },
+  {
+    "city": "Denver",
+    "county": "Denver",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000610492",
+    "site_name": "Protex Industries Incorporated"
+  },
+  {
+    "city": "Pueblo",
+    "county": "Pueblo",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000912665",
+    "site_name": "Pueblo Chemical Depot"
+  },
+  {
+    "city": "Denver",
+    "county": "Denver",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000621499",
+    "site_name": "Ramp Ind Inc"
+  },
+  {
+    "city": "Boulder",
+    "county": "Boulder",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000610474",
+    "site_name": "Raytheon Aircraft Co (was Beech Aircraft)"
+  },
+  {
+    "city": "Englewood",
+    "county": "Arapahoe",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000610508",
+    "site_name": "Remelt Metals Incorporated"
+  },
+  {
+    "city": "Golden",
+    "county": "Jefferson",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000868348",
+    "site_name": "Rocky Flats Site (USDOE)"
+  },
+  {
+    "city": "Pueblo",
+    "county": "Pueblo",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000913520",
+    "site_name": "Rockwool Ind Inc"
+  },
+  {
+    "city": "Commerce City",
+    "county": "Adams",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000868507",
+    "site_name": "Rocky Mountain Arsenal"
+  },
+  {
+    "city": "Englewood",
+    "county": "Arapahoe",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000621480",
+    "site_name": "Safety-Kleen Corp Englewood Branch"
+  },
+  {
+    "city": "Grand Junction",
+    "county": "Mesa",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000621514",
+    "site_name": "Safety-Kleen Corp 6 052 01"
+  },
+  {
+    "city": "Pueblo",
+    "county": "Pueblo",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000748255",
+    "site_name": "Safety-Kleen Corp 6 052 04"
+  },
+  {
+    "city": "Colorado Springs",
+    "county": "El Paso",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110000467753",
+    "site_name": "Schlage Lock"
+  },
+  {
+    "city": "Commerce City",
+    "county": "Adams",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110032913024",
+    "site_name": "Suncor Energy USA - Denver (Prev. Colorado Refining Co.)"
+  },
+  {
+    "city": "Lyons",
+    "county": "Boulder",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110022515553",
+    "site_name": "Syntex Lyons Groundwater Cleanup Project"
+  },
+  {
+    "city": "Boulder",
+    "county": "Boulder",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110015848957",
+    "site_name": "Univ of Colo - Dept of Public Safety"
+  },
+  {
+    "city": "Fort Carson",
+    "county": "El Paso",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110064253445",
+    "site_name": "US Army - Fort Carson"
+  },
+  {
+    "city": "Henderson",
+    "county": "Adams",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110010751230",
+    "site_name": "Veolia ES Technical Solutions LLC"
+  },
+  {
+    "city": "Fruita",
+    "county": "Mesa",
+    "reports": "https://echo.epa.gov/detailed-facility-report?fid=110043533496",
+    "site_name": "Western Slope Refining Company"
+  }
+]
