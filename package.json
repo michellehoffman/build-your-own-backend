@@ -1,0 +1,27 @@
+{
+  "name": "build-your-own-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "NODE_ENV=test mocha --exit",
+    "lint": "./node_modules/eslint/bin/eslint.js ./src/*/*/*.js",
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "eslint": "^4.19.1",
+    "express": "^4.16.3",
+    "knex": "^0.14.4",
+    "nodemon": "^1.17.2",
+    "pg": "^7.4.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "mocha": "^5.0.5"
+  }
+}
