@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "NODE_ENV=test mocha --exit",
-    "lint": "./node_modules/eslint/bin/eslint.js ./src/*/*/*.js",
+    "lint": "./node_modules/eslint/bin/eslint.js ./public/*/*.js",
+    "pretest": "npm run lint",
     "start": "nodemon server.js"
   },
   "keywords": [],
