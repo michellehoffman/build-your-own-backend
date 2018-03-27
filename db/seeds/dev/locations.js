@@ -1,10 +1,15 @@
 const siteData = require('../../../site-data.json');
-const locationData = siteData.map(site => (
-  { city: site.city, county: site.county }
-));
+const locationData = [];
+siteData.forEach(site => {
+  const match = locationData.find(location => location.city === site.city)
+
+  if(!match) {
+    locationData.push({ city: site.city, county: site.county })
+  }
+  return;
+})
 
 exports.seed = function(knex, Promise) {
-  // Deletes ALL existing entries
   return knex('sites').del()
     .then(() => knex('locations').del())
     .then(() => {
