@@ -70,5 +70,39 @@ describe('API Routes', () => {
     })
   })
 
+  describe('POST /api/v1/locations', () => {
+    it('should create a new location', () => {
+      return chai.request(server)
+      .post('/api/v1/locations')
+      .send({
+        city: 'Glenwood Springs',
+        county: 'Garfield'
+      })
+      .then(response => {
+        response.should.have.status(201);
+        response.body.should.be.a('object');
+        response.body.should.have.a.property('id');
+        response.body.id.should.equal(23);
+      })
+      .catch( error => {
+        throw error;
+      })
+    })
+
+    it('should return a 422 error if a body property is missing', () => {
+      return chai.request(server)
+        .post('/api/v1/locations')
+        .send({})
+        .then( response => {
+          response.should.have.status(422);
+          response.body.should.have.property('error');
+          response.body.error.should.equal("Expected format: city: <String>. You're missing a \"city\" property.")
+        })
+        .catch( error => {
+          throw error;
+        })
+    })
+  })
+
 
 })

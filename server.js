@@ -19,6 +19,26 @@ app.get('/api/v1/locations', (request, response) => {
   })
 })
 
+app.post('/api/v1/locations', (request, response) => {
+  const location = request.body;
+
+  for (let requiredParameter of ['city', 'county']) {
+    if(!location[requiredParameter]) {
+      return response.status(422).send({
+        error: `Expected format: ${requiredParameter}: <String>. You're missing a "${requiredParameter}" property.`
+      });
+    }
+  }
+
+  database('locations').insert(location, 'id')
+    .then(location => {
+      response.status(201).json({ id: location[0] })
+    })
+    .catch( error => {
+      response.status(500).json({ error })
+    })
+})
+
 app.listen(app.get('port'), () => {
   console.log(`Server is running on ${ app.get('port') }`);
 });
