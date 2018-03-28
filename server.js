@@ -37,6 +37,24 @@ app.get('/api/v1/locations/:id', (request, response ) => {
   })
 })
 
+app.delete('/api/v1/locations/:id', (request, response) => {
+  const { id } = request.params;
+
+  database('sites').where('location_id', id).del()
+  .then( sites => {
+    //Do something here
+  })
+
+  database('locations').where('id', id).del()
+  .then( location => {
+    if ( location ) {
+      response.status(202).json(location);
+    } else {
+      response.status(404).json({ error: `No record with id: ${id} to delete`})
+    }
+  })
+
+})
 
 app.post('/api/v1/locations', (request, response) => {
   const location = request.body;
@@ -57,6 +75,7 @@ app.post('/api/v1/locations', (request, response) => {
       response.status(500).json({ error })
     })
 })
+
 
 app.listen(app.get('port'), () => {
   console.log(`Server is running on ${ app.get('port') }`);

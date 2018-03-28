@@ -117,16 +117,40 @@ describe('API Routes', () => {
 
     it('should return a 422 error if a body property is missing', () => {
       return chai.request(server)
-        .post('/api/v1/locations')
-        .send({})
-        .then( response => {
-          response.should.have.status(422);
-          response.body.should.have.property('error');
-          response.body.error.should.equal("Expected format: city: <String>. You're missing a \"city\" property.")
-        })
-        .catch( error => {
-          throw error;
-        })
+      .post('/api/v1/locations')
+      .send({})
+      .then( response => {
+        response.should.have.status(422);
+        response.body.should.have.property('error');
+        response.body.error.should.equal("Expected format: city: <String>. You're missing a \"city\" property.")
+      })
+      .catch( error => {
+        throw error;
+      })
+    })
+  })
+
+  describe('DELETE /api/v1/projects/:id', () => {
+    it('should delete a location from the database', () => {
+      return chai.request(server)
+      .delete('/api/v1/locations/1')
+      .then( response => {
+        response.should.have.status(202);
+      })
+      .catch( error => {
+        throw error;
+      })
+    })
+
+    it('should return a 404 error if no project with that id exists', () => {
+      return chai.request(server)
+      .delete('/api/v1/locations/50')
+      .then(response => {
+        response.should.have.status(404);
+        response.body.should.be.a('object');
+        response.body.should.have.property('error');
+        response.body.error.should.equal('No record with id: 50 to delete');
+      })
     })
   })
 
