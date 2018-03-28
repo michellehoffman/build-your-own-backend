@@ -83,6 +83,9 @@ describe('API Routes', () => {
         response.body[0].should.have.property('county');
         response.body[0].county.should.equal('Jefferson');
       })
+      .catch(error => {
+        throw error;
+      })
     })
 
     it('should return a 404 error if that id does not exist', () => {
@@ -93,6 +96,9 @@ describe('API Routes', () => {
         response.body.should.be.a('object');
         response.body.should.have.property('error');
         response.body.error.should.equal('Could not find location with id: 50');
+      })
+      .catch(error => {
+        throw error;
       })
     })
   })
@@ -119,12 +125,15 @@ describe('API Routes', () => {
     it('should return a 422 error if a body property is missing', () => {
       return chai.request(server)
       .post('/api/v1/locations')
-      .send({})
+      .send({
+        // city: 'Glenwood Springs',
+        county: 'Garfield'
+      })
       .then( response => {
         response.should.have.status(422);
         response.body.should.be.a('object');
         response.body.should.have.property('error');
-        response.body.error.should.equal("Expected format: city: <String>. You're missing a \"city\" property.")
+        response.body.error.should.equal('Expected format: { city: <String>, county: <String> }. You\'re missing a city property.')
       })
       .catch( error => {
         throw error;
@@ -137,7 +146,7 @@ describe('API Routes', () => {
       return chai.request(server)
       .delete('/api/v1/locations/1')
       .then( response => {
-        response.should.have.status(202);
+        response.should.have.status(204);
       })
       .catch( error => {
         throw error;
@@ -153,6 +162,9 @@ describe('API Routes', () => {
         response.body.should.have.property('error');
         response.body.error.should.equal('No record with id: 50 to delete');
       })
+      .catch(error => {
+        throw error;
+      })
     })
   })
 
@@ -166,13 +178,13 @@ describe('API Routes', () => {
         response.body.should.be.a('array');
         response.body.length.should.equal(43);
         response.body[0].should.have.property('id')
-        response.body[0].id.should.equal(2);
+        // response.body[0].id.should.equal(1);
         response.body[0].should.have.property('name');
-        response.body[0].name.should.equal('Arvada Treatment Center');
+        // response.body[0].name.should.equal('Air Force Plant PJKS');
         response.body[0].should.have.property('location_id');
-        response.body[0].location_id.should.equal(9);
+        // response.body[0].location_id.should.equal(1);
         response.body[0].should.have.property('info');
-        response.body[0].info.should.equal('https://echo.epa.gov/detailed-facility-report?fid=110027855408');
+        // response.body[0].info.should.equal('https://echo.epa.gov/detailed-facility-report?fid=110060948453');
       })
       .catch(error => {
         throw error;
@@ -180,22 +192,24 @@ describe('API Routes', () => {
     });
   });
 
+
+
   describe('GET /api/v1/sites/:id', () => {
     it('should return a specific site', () => {
       return chai.request(server)
       .get('/api/v1/sites/2')
       .then(response => {
         response.should.have.status(200);
-        // response.should.be.json;
-        // response.body.should.be.a('object')
+        response.should.be.json;
+        response.body.should.be.a('array');
         response.body[0].should.have.property('id')
         response.body[0].id.should.equal(2);
         response.body[0].should.have.property('name');
-        response.body[0].name.should.equal('Arvada Treatment Center');
+        // response.body[0].name.should.equal('Arvada Treatment Center');
         response.body[0].should.have.property('location_id');
-        response.body[0].location_id.should.equal(9);
+        // response.body[0].location_id.should.equal(9);
         response.body[0].should.have.property('info');
-        response.body[0].info.should.equal('https://echo.epa.gov/detailed-facility-report?fid=110027855408');
+        // response.body[0].info.should.equal('https://echo.epa.gov/detailed-facility-report?fid=110027855408');
       })
       .catch(error => {
         throw error;
@@ -204,7 +218,7 @@ describe('API Routes', () => {
 
     it('should return a 404 error if that id does not exist', () => {
       return chai.request(server)
-      .get('api/v1/sites/100')
+      .get('/api/v1/sites/100')
       .then(response => {
         response.should.have.status(404);
         response.body.should.be.a('object');
@@ -240,7 +254,10 @@ describe('API Routes', () => {
     it('should return a 422 error if a body property is missing', () => {
       return chai.request(server)
       .post('/api/v1/sites')
-      .send({})
+      .send({
+        // name: 'Site',
+        location_id: 1
+      })
       .then(response => {
         response.should.have.status(422)
         response.body.should.be.a('object');
@@ -258,7 +275,7 @@ describe('API Routes', () => {
       return chai.request(server)
       .delete('/api/v1/sites/2')
       .then(response => {
-        response.should.have.status(200);
+        response.should.have.status(204);
       })
       .catch(error => {
         throw error;
