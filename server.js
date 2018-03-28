@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
+
+process.env.SECRET_KEY = 'definitely not a secret key';
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
@@ -9,6 +12,37 @@ const database = require('knex')(configuration);
 app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+const checkAuth = (request, response, next) => {
+  const { token } = request.body;
+
+  if (!token) {
+    return response.status(403).json({
+      error: "You must be authorized to access this endpoint"
+    })
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    next()
+  } catch (error) {
+    return response.status(403).json({error: "Invalid token"})
+  }
+}
+
+//AUTHORIZATION
+app.post('/authenticate', ( request, response ) => {
+  const payload = request.body;
+
+  for (let requiredParameter of ['email', 'appName'] ) {
+    if(!payload[requiredParameter]) {
+      return response.status(422).send({ error: `Expected format: {email: <String>, appName: <String>}. You're missing a ${requiredParameter} property`});
+    }
+  }
+  const token = jwt.sign(payload, process.env.SECRET_KEY);
+
+  response.status(201).json({ token });
+});
 
 //LOCATIONS
 app.get('/api/v1/locations', (request, response) => {
@@ -37,9 +71,9 @@ app.get('/api/v1/locations/:id', (request, response ) => {
   })
 })
 
-app.post('/api/v1/locations', (request, response) => {
-  const location = request.body;
-
+app.post('/api/v1/locations', checkAuth, (request, response) => {
+  const { city, county } = request.body;
+  const location = {city, county}
   for (let requiredParameter of ['city', 'county']) {
     if(!location[requiredParameter]) {
       return response.status(422).send({
