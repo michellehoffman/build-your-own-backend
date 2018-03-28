@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
+
+process.env.SECRET_KEY = 'definitely not a secret key';
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
@@ -9,6 +12,20 @@ const database = require('knex')(configuration);
 app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+//AUTHORIZATION
+app.post('/authenticate', ( request, response ) => {
+  const payload = request.body;
+
+  for (let requiredParameter of ['email', 'appName'] ) {
+    if(!payload[requiredParameter]) {
+      return response.status(422).send({ error: `Expected format: {email: <String>, appName: <String>}. You're missing a ${requiredParameter} property`});
+    }
+  }
+  const token = jwt.sign(payload, process.env.SECRET_KEY);
+
+  response.status(201).json({ token });
+});
 
 //LOCATIONS
 app.get('/api/v1/locations', (request, response) => {

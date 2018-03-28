@@ -16,6 +16,7 @@
     "body-parser": "^1.18.2",
     "eslint": "^4.19.1",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.0",
     "knex": "^0.14.4",
     "nightmare": "^3.0.0",
     "nodemon": "^1.17.2",
