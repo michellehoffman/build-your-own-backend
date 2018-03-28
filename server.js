@@ -91,23 +91,20 @@ app.post('/api/v1/locations', checkAuth, (request, response) => {
   })
 })
 
-app.delete('/api/v1/locations/:id', (request, response) => {
+app.delete('/api/v1/locations/:id', checkAuth, (request, response) => {
   const { id } = request.params;
 
   database('sites').where('location_id', id).del()
-  .then( sites => {
-    //Do something here
+  .then (() => {
+    database('locations').where('id', id).del()
+    .then( location => {
+      if ( location ) {
+        response.status(204).json(location);
+      } else {
+        response.status(404).json({ error: `No record with id: ${id} to delete`})
+      }
+    })
   })
-
-  database('locations').where('id', id).del()
-  .then( location => {
-    if ( location ) {
-      response.status(204).json(location);
-    } else {
-      response.status(404).json({ error: `No record with id: ${id} to delete`})
-    }
-  })
-
 })
 
 // SITES
@@ -134,8 +131,9 @@ app.get('/api/v1/sites/:id', (request, response) => {
   .catch(error => response.status(500).json({ error }));
 });
 
-app.post('/api/v1/sites', (request, response) => {
-  const site = request.body;
+app.post('/api/v1/sites', checkAuth, (request, response) => {
+  const { name, location_id, info } = request.body;
+  const site = { name, location_id, info }
 
   for (let requiredParameter of ['name', 'location_id']) {
     if(!site[requiredParameter]) {
@@ -150,7 +148,7 @@ app.post('/api/v1/sites', (request, response) => {
   .catch(error => response.status(500).json({ error }))
 })
 
-app.delete('/api/v1/sites/:id', (request, response) => {
+app.delete('/api/v1/sites/:id', checkAuth, (request, response) => {
   const { id } = request.params;
 
   database('sites').where('id', id).del()
