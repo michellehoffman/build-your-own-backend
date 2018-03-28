@@ -56,13 +56,13 @@ describe('API Routes', () => {
         response.should.have.status(200);
         response.should.be.json;
         response.body.should.be.a('array');
-        response.body.length.should.equal(22);
+        response.body.length.should.equal(1);
         response.body[0].should.have.property('id');
         response.body[0].id.should.equal(1);
         response.body[0].should.have.property('city');
-        response.body[0].city.should.equal('Littleton');
+        response.body[0].city.should.equal('Denver');
         response.body[0].should.have.property('county');
-        response.body[0].county.should.equal('Jefferson');
+        response.body[0].county.should.equal('Denver');
       })
       .catch(error => {
         throw error;
@@ -79,9 +79,9 @@ describe('API Routes', () => {
         response.body[0].should.have.property('id');
         response.body[0].id.should.equal(1);
         response.body[0].should.have.property('city');
-        response.body[0].city.should.equal('Littleton')
+        response.body[0].city.should.equal('Denver')
         response.body[0].should.have.property('county');
-        response.body[0].county.should.equal('Jefferson');
+        response.body[0].county.should.equal('Denver');
       })
       .catch(error => {
         throw error;
@@ -115,7 +115,7 @@ describe('API Routes', () => {
         response.should.have.status(201);
         response.body.should.be.a('object');
         response.body.should.have.property('id');
-        response.body.id.should.equal(23);
+        response.body.id.should.equal(2);
       })
       .catch( error => {
         throw error;
@@ -176,15 +176,15 @@ describe('API Routes', () => {
         response.should.have.status(200);
         response.should.be.json;
         response.body.should.be.a('array');
-        response.body.length.should.equal(43);
+        response.body.length.should.equal(1);
         response.body[0].should.have.property('id')
-        // response.body[0].id.should.equal(1);
+        response.body[0].id.should.equal(1);
         response.body[0].should.have.property('name');
-        // response.body[0].name.should.equal('Air Force Plant PJKS');
+        response.body[0].name.should.equal('Fire');
         response.body[0].should.have.property('location_id');
-        // response.body[0].location_id.should.equal(1);
+        response.body[0].location_id.should.equal(1);
         response.body[0].should.have.property('info');
-        // response.body[0].info.should.equal('https://echo.epa.gov/detailed-facility-report?fid=110060948453');
+        response.body[0].info.should.equal('info link');
       })
       .catch(error => {
         throw error;
@@ -192,24 +192,22 @@ describe('API Routes', () => {
     });
   });
 
-
-
   describe('GET /api/v1/sites/:id', () => {
     it('should return a specific site', () => {
       return chai.request(server)
-      .get('/api/v1/sites/2')
+      .get('/api/v1/sites/1')
       .then(response => {
         response.should.have.status(200);
         response.should.be.json;
         response.body.should.be.a('array');
         response.body[0].should.have.property('id')
-        response.body[0].id.should.equal(2);
+        response.body[0].id.should.equal(1);
         response.body[0].should.have.property('name');
-        // response.body[0].name.should.equal('Arvada Treatment Center');
+        response.body[0].name.should.equal('Fire');
         response.body[0].should.have.property('location_id');
-        // response.body[0].location_id.should.equal(9);
+        response.body[0].location_id.should.equal(1);
         response.body[0].should.have.property('info');
-        // response.body[0].info.should.equal('https://echo.epa.gov/detailed-facility-report?fid=110027855408');
+        response.body[0].info.should.equal('info link');
       })
       .catch(error => {
         throw error;
@@ -237,14 +235,14 @@ describe('API Routes', () => {
       .post('/api/v1/sites')
       .send({
         name: 'Lakewood Site',
-        location_id: '18',
+        location_id: '1',
         info: 'api endpoint'
       })
       .then(response => {
         response.should.have.status(201);
         response.body.should.be.a('object');
         response.body.should.have.property('id');
-        response.body.id.should.equal(44);
+        response.body.id.should.equal(2);
       })
       .catch(error => {
         throw error;
@@ -273,7 +271,7 @@ describe('API Routes', () => {
   describe('DELETE /api/v1/sites/:id', () => {
     it('should delete a site from the database', () => {
       return chai.request(server)
-      .delete('/api/v1/sites/2')
+      .delete('/api/v1/sites/1')
       .then(response => {
         response.should.have.status(204);
       })
