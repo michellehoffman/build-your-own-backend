@@ -46,11 +46,23 @@ app.post('/authenticate', ( request, response ) => {
 
 //LOCATIONS
 app.get('/api/v1/locations', (request, response) => {
-  database('locations').select()
-  .then(locations => response.status(200).json(locations))
-  .catch(error => {
-    return response.status(500).json({ error });
-  })
+  const { county } = request.query;
+
+  if (!county) {
+    database('locations').select()
+    .then(locations => response.status(200).json(locations))
+    .catch(error => {
+      return response.status(500).json({ error });
+    })
+  } else {
+    database('locations').where('county', county)
+    .then(locations => response.status(200).json(locations))
+    .catch(error => {
+      return response.status(500).json({ error })
+    })
+  }
+
+  
 })
 
 app.get('/api/v1/locations/:id', (request, response ) => {
