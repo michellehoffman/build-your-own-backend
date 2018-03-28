@@ -10,6 +10,73 @@ app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+//LOCATIONS
+app.get('/api/v1/locations', (request, response) => {
+  database('locations').select()
+  .then(locations => response.status(200).json(locations))
+  .catch(error => {
+    return response.status(500).json({ error });
+  })
+})
+
+app.get('/api/v1/locations/:id', (request, response ) => {
+  const { id } = request.params;
+
+  database('locations').where('id', id).select()
+  .then(location => {
+    if (location.length > 0) {
+      response.status(200).json(location)
+    } else {
+      response.status(404).json({
+        error: `Could not find location with id: ${id}`
+      })
+    }
+  })
+  .catch( error => {
+    response.status(500).json({ error })
+  })
+})
+
+app.delete('/api/v1/locations/:id', (request, response) => {
+  const { id } = request.params;
+
+  database('sites').where('location_id', id).del()
+  .then( sites => {
+    //Do something here
+  })
+
+  database('locations').where('id', id).del()
+  .then( location => {
+    if ( location ) {
+      response.status(202).json(location);
+    } else {
+      response.status(404).json({ error: `No record with id: ${id} to delete`})
+    }
+  })
+
+})
+
+app.post('/api/v1/locations', (request, response) => {
+  const location = request.body;
+
+  for (let requiredParameter of ['city', 'county']) {
+    if(!location[requiredParameter]) {
+      return response.status(422).send({
+        error: `Expected format: ${requiredParameter}: <String>. You're missing a "${requiredParameter}" property.`
+      });
+    }
+  }
+
+  database('locations').insert(location, 'id')
+    .then(location => {
+      response.status(201).json({ id: location[0] })
+    })
+    .catch( error => {
+      response.status(500).json({ error })
+    })
+})
+
+
 app.listen(app.get('port'), () => {
   console.log(`Server is running on ${ app.get('port') }`);
 });
