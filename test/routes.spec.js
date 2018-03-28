@@ -66,9 +66,9 @@ describe('API Routes', () => {
       })
       .catch(error => {
         throw error;
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('GET /api/v1/locations/:id', () => {
     it('should return a specific location', () => {
@@ -85,8 +85,8 @@ describe('API Routes', () => {
       })
       .catch(error => {
         throw error;
-      })
-    })
+      });
+    });
 
     it('should return a 404 error if that id does not exist', () => {
       return chai.request(server)
@@ -99,9 +99,9 @@ describe('API Routes', () => {
       })
       .catch(error => {
         throw error;
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('POST /api/v1/locations', () => {
     it('should create a new location', () => {
@@ -119,8 +119,8 @@ describe('API Routes', () => {
       })
       .catch( error => {
         throw error;
-      })
-    })
+      });
+    });
 
     it('should return a 422 error if a body property is missing', () => {
       return chai.request(server)
@@ -137,9 +137,9 @@ describe('API Routes', () => {
       })
       .catch( error => {
         throw error;
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('DELETE /api/v1/locations/:id', () => {
     it('should delete a location from the database', () => {
@@ -150,8 +150,8 @@ describe('API Routes', () => {
       })
       .catch( error => {
         throw error;
-      })
-    })
+      });
+    });
 
     it('should return a 404 error if no location with that id exists', () => {
       return chai.request(server)
@@ -164,9 +164,9 @@ describe('API Routes', () => {
       })
       .catch(error => {
         throw error;
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('GET /api/v1/sites', () => {
     it('should return all of the sites', () => {
@@ -257,7 +257,7 @@ describe('API Routes', () => {
         location_id: 1
       })
       .then(response => {
-        response.should.have.status(422)
+        response.should.have.status(422);
         response.body.should.be.a('object');
         response.body.should.have.property('error');
         response.body.error.should.equal('Expected format: { name: <String>, location_id: <Number> }. You\'re missing a name property.')
