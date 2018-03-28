@@ -2,6 +2,7 @@ const chai = require('chai');
 const should = chai.should();
 const chaiHttp = require('chai-http');
 const server = require('../server');
+const token = require('../token.js');
 
 chai.use(chaiHttp);
 
@@ -109,7 +110,8 @@ describe('API Routes', () => {
       .post('/api/v1/locations')
       .send({
         city: 'Glenwood Springs',
-        county: 'Garfield'
+        county: 'Garfield',
+        token
       })
       .then(response => {
         response.should.have.status(201);
@@ -127,7 +129,8 @@ describe('API Routes', () => {
       .post('/api/v1/locations')
       .send({
         // city: 'Glenwood Springs',
-        county: 'Garfield'
+        county: 'Garfield',
+        token
       })
       .then( response => {
         response.should.have.status(422);

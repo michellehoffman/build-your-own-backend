@@ -13,6 +13,23 @@ app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+const checkAuth = (request, response, next) => {
+  const { token } = request.body;
+
+  if (!token) {
+    return response.status(403).json({
+      error: "You must be authorized to access this endpoint"
+    })
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    next()
+  } catch (error) {
+    return response.status(403).json({error: "Invalid token"})
+  }
+}
+
 //AUTHORIZATION
 app.post('/authenticate', ( request, response ) => {
   const payload = request.body;
@@ -54,9 +71,9 @@ app.get('/api/v1/locations/:id', (request, response ) => {
   })
 })
 
-app.post('/api/v1/locations', (request, response) => {
-  const location = request.body;
-
+app.post('/api/v1/locations', checkAuth, (request, response) => {
+  const { city, county } = request.body;
+  const location = {city, county}
   for (let requiredParameter of ['city', 'county']) {
     if(!location[requiredParameter]) {
       return response.status(422).send({
