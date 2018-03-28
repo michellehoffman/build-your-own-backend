@@ -85,11 +85,12 @@ describe('API Routes', () => {
       })
     })
 
-    it('should return a 404 if error if that id does not exist', () => {
+    it('should return a 404 error if that id does not exist', () => {
       return chai.request(server)
       .get('/api/v1/locations/50')
       .then( response => {
         response.should.have.status(404);
+        response.body.should.be.a('object');
         response.body.should.have.property('error');
         response.body.error.should.equal('Could not find location with id: 50');
       })
@@ -107,7 +108,7 @@ describe('API Routes', () => {
       .then(response => {
         response.should.have.status(201);
         response.body.should.be.a('object');
-        response.body.should.have.a.property('id');
+        response.body.should.have.property('id');
         response.body.id.should.equal(23);
       })
       .catch( error => {
@@ -121,6 +122,7 @@ describe('API Routes', () => {
       .send({})
       .then( response => {
         response.should.have.status(422);
+        response.body.should.be.a('object');
         response.body.should.have.property('error');
         response.body.error.should.equal("Expected format: city: <String>. You're missing a \"city\" property.")
       })
@@ -130,7 +132,7 @@ describe('API Routes', () => {
     })
   })
 
-  describe('DELETE /api/v1/projects/:id', () => {
+  describe('DELETE /api/v1/locations/:id', () => {
     it('should delete a location from the database', () => {
       return chai.request(server)
       .delete('/api/v1/locations/1')
@@ -142,7 +144,7 @@ describe('API Routes', () => {
       })
     })
 
-    it('should return a 404 error if no project with that id exists', () => {
+    it('should return a 404 error if no location with that id exists', () => {
       return chai.request(server)
       .delete('/api/v1/locations/50')
       .then(response => {
@@ -154,5 +156,127 @@ describe('API Routes', () => {
     })
   })
 
+  describe('GET /api/v1/sites', () => {
+    it('should return all of the sites', () => {
+      return chai.request(server)
+      .get('/api/v1/sites')
+      .then(response => {
+        response.should.have.status(200);
+        response.should.be.json;
+        response.body.should.be.a('array');
+        response.body.length.should.equal(43);
+        response.body[0].should.have.property('id')
+        response.body[0].id.should.equal(2);
+        response.body[0].should.have.property('name');
+        response.body[0].name.should.equal('Arvada Treatment Center');
+        response.body[0].should.have.property('location_id');
+        response.body[0].location_id.should.equal(9);
+        response.body[0].should.have.property('info');
+        response.body[0].info.should.equal('https://echo.epa.gov/detailed-facility-report?fid=110027855408');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+  });
 
-})
+  describe('GET /api/v1/sites/:id', () => {
+    it('should return a specific site', () => {
+      return chai.request(server)
+      .get('/api/v1/sites/2')
+      .then(response => {
+        response.should.have.status(200);
+        // response.should.be.json;
+        // response.body.should.be.a('object')
+        response.body[0].should.have.property('id')
+        response.body[0].id.should.equal(2);
+        response.body[0].should.have.property('name');
+        response.body[0].name.should.equal('Arvada Treatment Center');
+        response.body[0].should.have.property('location_id');
+        response.body[0].location_id.should.equal(9);
+        response.body[0].should.have.property('info');
+        response.body[0].info.should.equal('https://echo.epa.gov/detailed-facility-report?fid=110027855408');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 404 error if that id does not exist', () => {
+      return chai.request(server)
+      .get('api/v1/sites/100')
+      .then(response => {
+        response.should.have.status(404);
+        response.body.should.be.a('object');
+        response.body.should.have.property('error');
+        response.body.error.should.equal('Could not find site with id: 100');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+  });
+
+  describe('POST /api/v1/sites', () => {
+    it('should create a new site', () => {
+      return chai.request(server)
+      .post('/api/v1/sites')
+      .send({
+        name: 'Lakewood Site',
+        location_id: '18',
+        info: 'api endpoint'
+      })
+      .then(response => {
+        response.should.have.status(201);
+        response.body.should.be.a('object');
+        response.body.should.have.property('id');
+        response.body.id.should.equal(44);
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 422 error if a body property is missing', () => {
+      return chai.request(server)
+      .post('/api/v1/sites')
+      .send({})
+      .then(response => {
+        response.should.have.status(422)
+        response.body.should.be.a('object');
+        response.body.should.have.property('error');
+        response.body.error.should.equal('Expected format: { name: <String>, location_id: <Number> }. You\'re missing a name property.')
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+  });
+
+  describe('DELETE /api/v1/sites/:id', () => {
+    it('should delete a site from the database', () => {
+      return chai.request(server)
+      .delete('/api/v1/sites/2')
+      .then(response => {
+        response.should.have.status(200);
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 404 error if no site with that id exists', () => {
+      return chai.request(server)
+      .delete('/api/v1/sites/100')
+      .then(response => {
+        response.should.have.status(404);
+        response.body.should.be.a('object');
+        response.body.should.have.property('error');
+        response.body.error.should.equal('No site with id: 100 to delete');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+  });
+});
