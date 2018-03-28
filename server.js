@@ -19,6 +19,25 @@ app.get('/api/v1/locations', (request, response) => {
   })
 })
 
+app.get('/api/v1/locations/:id', (request, response ) => {
+  const { id } = request.params;
+
+  database('locations').where('id', id).select()
+  .then(location => {
+    if (location.length > 0) {
+      response.status(200).json(location)
+    } else {
+      response.status(404).json({
+        error: `Could not find location with id: ${id}`
+      })
+    }
+  })
+  .catch( error => {
+    response.status(500).json({ error })
+  })
+})
+
+
 app.post('/api/v1/locations', (request, response) => {
   const location = request.body;
 

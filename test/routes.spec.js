@@ -70,6 +70,32 @@ describe('API Routes', () => {
     })
   })
 
+  describe('GET /api/v1/locations/:id', () => {
+    it('should return a specific location', () => {
+      return chai.request(server)
+      .get('/api/v1/locations/1')
+      .then( response => {
+        response.should.have.status(200);
+        response.body[0].should.have.property('id');
+        response.body[0].id.should.equal(1);
+        response.body[0].should.have.property('city');
+        response.body[0].city.should.equal('Littleton')
+        response.body[0].should.have.property('county');
+        response.body[0].county.should.equal('Jefferson');
+      })
+    })
+
+    it('should return a 404 if error if that id does not exist', () => {
+      return chai.request(server)
+      .get('/api/v1/locations/50')
+      .then( response => {
+        response.should.have.status(404);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('Could not find location with id: 50');
+      })
+    })
+  })
+
   describe('POST /api/v1/locations', () => {
     it('should create a new location', () => {
       return chai.request(server)
