@@ -55,27 +55,27 @@ app.post('/authenticate', ( request, response ) => {
 
 //LOCATIONS
 app.get('/api/v1/locations', (request, response) => {
-  const { county, city } = request.query;
+  const queryKeys = Object.keys(request.query);
 
-  if (!county && !city) {
+  if (queryKeys.length === 0) {
     database('locations').select()
     .then(locations => response.status(200).json(locations))
     .catch(error => {
       return response.status(500).json({ error });
-    })
+    });
   } else {
-    const queryKeys = Object.keys(request.query);
-    queryKeys.forEach(key => {
-      database('locations').where(key, request.query[key])
-      .then(locations => {
-        if(locations.length > 0) {
-          response.status(200).json(locations)
-        } else {
-          response.status(404).json({
-            error: `Could not find locations in ${ key }: ${ request.query[key] }`
-          })
-        }
-      })
+    database('locations').where(request.query).select('*')
+    .then(locations => {
+      if(locations.length > 0) {
+        response.status(200).json(locations);
+      } else {
+        response.status(404).json({
+          error: `Could not find locations at that custom query`
+        })
+      }
+    })
+    .catch(error => {
+      return response.status(500).json({ error })
     })
   }
 })
