@@ -15,16 +15,17 @@ app.use(express.static('public'));
 
 const checkAuth = (request, response, next) => {
   const auth = request.headers.authorization;
-  const token = auth.substring(7);
 
-  if (!token) {
+  if (!auth) {
     return response.status(403).json({
       error: "You must be authorized to access this endpoint"
     })
   }
 
   try {
+    const token = auth.substring(7);
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    
     next()
   } catch (error) {
     return response.status(403).json({error: "Invalid token"})
@@ -93,6 +94,7 @@ app.get('/api/v1/locations/:id', (request, response ) => {
 app.post('/api/v1/locations', checkAuth, (request, response) => {
   const { city, county } = request.body;
   const location = {city, county}
+  
   for (let requiredParameter of ['city', 'county']) {
     if(!location[requiredParameter]) {
       return response.status(422).send({
@@ -113,6 +115,7 @@ app.post('/api/v1/locations', checkAuth, (request, response) => {
 app.patch('/api/v1/locations/:id', checkAuth, (request, response) => {
   const { id } = request.params;
   const locationChange = request.body;
+
   database('locations').where('id', id).update(locationChange)
   .then( location => {
     if (location) {

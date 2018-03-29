@@ -113,7 +113,7 @@ describe('API Routes', () => {
       })
       .send({
         city: 'Glenwood Springs',
-        county: 'Garfield',
+        county: 'Garfield'
       })
       .then(response => {
         response.should.have.status(201);
@@ -122,6 +122,43 @@ describe('API Routes', () => {
         response.body.id.should.equal(2);
       })
       .catch( error => {
+        throw error;
+      });
+    });
+
+    it('should return a 403 error if a token is not provided', () => {
+      return chai.request(server)
+      .post('/api/v1/locations')
+      .send({
+        city: 'Glenwood Springs',
+        county: 'Garfield'
+      })
+      .then(response => {
+        response.should.have.status(403);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('You must be authorized to access this endpoint');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 403 error if a token is invalid', () => {
+      return chai.request(server)
+      .post('/api/v1/locations')
+      .set({
+        authorization: 'Bad token'
+      })
+      .send({
+        city: 'Glenwood Springs',
+        county: 'Garfield'
+      })
+      .then(response => {
+        response.should.have.status(403);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('Invalid token')
+      })
+      .catch(error => {
         throw error;
       });
     });
@@ -160,6 +197,35 @@ describe('API Routes', () => {
         response.should.have.status(204);
       })
       .catch( error => {
+        throw error;
+      });
+    });
+
+    it('should return a 403 error if a token is not provided', () => {
+      return chai.request(server)
+      .delete('/api/v1/locations/1')
+      .then(response => {
+        response.should.have.status(403);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('You must be authorized to access this endpoint');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 403 error if a token is invalid', () => {
+      return chai.request(server)
+      .delete('/api/v1/locations/1')
+      .set({
+        authorization: 'Bad token'
+      })
+      .then(response => {
+        response.should.have.status(403);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('Invalid token')
+      })
+      .catch(error => {
         throw error;
       });
     });
@@ -266,6 +332,35 @@ describe('API Routes', () => {
       });
     });
 
+    it('should return a 403 error if a token is not provided', () => {
+      return chai.request(server)
+      .post('/api/v1/sites')
+      .then(response => {
+        response.should.have.status(403);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('You must be authorized to access this endpoint');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 403 error if a token is invalid', () => {
+      return chai.request(server)
+      .post('/api/v1/sites')
+      .set({
+        authorization: 'Bad token'
+      })
+      .then(response => {
+        response.should.have.status(403);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('Invalid token')
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
     it('should return a 422 error if a body property is missing', () => {
       return chai.request(server)
       .post('/api/v1/sites')
@@ -297,6 +392,35 @@ describe('API Routes', () => {
       })
       .then(response => {
         response.should.have.status(204);
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 403 error if a token is not provided', () => {
+      return chai.request(server)
+      .delete('/api/v1/sites/1')
+      .then(response => {
+        response.should.have.status(403);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('You must be authorized to access this endpoint');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 403 error if a token is invalid', () => {
+      return chai.request(server)
+      .delete('/api/v1/sites/1')
+      .set({
+        authorization: 'Bad token'
+      })
+      .then(response => {
+        response.should.have.status(403);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('Invalid token')
       })
       .catch(error => {
         throw error;
