@@ -56,13 +56,19 @@ app.get('/api/v1/locations', (request, response) => {
     })
   } else {
     database('locations').where('county', county)
-    .then(locations => response.status(200).json(locations))
-    .catch(error => {
-      return response.status(500).json({ error })
+    .then(locations => {
+      if(locations.length > 0) {
+        response.status(200).json(locations)
+      } else {
+        response.status(404).json({
+          error: `Could not find locations in county: ${ county }`
+        })
+      }
     })
+    .catch(error => {
+      response.status(500).json({ error })
+    });
   }
-
-  
 })
 
 app.get('/api/v1/locations/:id', (request, response ) => {
