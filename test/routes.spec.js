@@ -69,6 +69,105 @@ describe('API Routes', () => {
         throw error;
       });
     });
+
+    it('should return all of the locations at a custom city query', () => {
+      return chai.request(server)
+      .get('/api/v1/locations?city=Denver')
+      .then(response => {
+        response.should.have.status(200);
+        response.should.be.json;
+        response.body.should.be.a('array');
+        response.body.length.should.equal(1);
+        response.body[0].should.have.property('id');
+        response.body[0].id.should.equal(1);
+        response.body[0].should.have.property('city');
+        response.body[0].city.should.equal('Denver');
+        response.body[0].should.have.property('county');
+        response.body[0].county.should.equal('Denver');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return all of the locations at a custom county query', () => {
+      return chai.request(server)
+      .get('/api/v1/locations?county=Denver')
+      .then(response => {
+        response.should.have.status(200);
+        response.should.be.json;
+        response.body.should.be.a('array');
+        response.body.length.should.equal(1);
+        response.body[0].should.have.property('id');
+        response.body[0].id.should.equal(1);
+        response.body[0].should.have.property('city');
+        response.body[0].city.should.equal('Denver');
+        response.body[0].should.have.property('county');
+        response.body[0].county.should.equal('Denver');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return all of the locations at a custom query for both city and county', () => {
+      return chai.request(server)
+      .get('/api/v1/locations?city=Denver&county=Denver')
+      .then(response => {
+        response.should.have.status(200);
+        response.should.be.json;
+        response.body.should.be.a('array');
+        response.body.length.should.equal(1);
+        response.body[0].should.have.property('id');
+        response.body[0].id.should.equal(1);
+        response.body[0].should.have.property('city');
+        response.body[0].city.should.equal('Denver');
+        response.body[0].should.have.property('county');
+        response.body[0].county.should.equal('Denver');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 404 error if custom city query does not exist in database', () => {
+      return chai.request(server)
+      .get('/api/v1/locations?city=Lakewood')
+      .then(response => {
+        response.should.have.status(404);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('Could not find locations at that custom query');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 404 error if custom county query does not exist in database', () => {
+      return chai.request(server)
+      .get('/api/v1/locations?county=Lakewood')
+      .then(response => {
+        response.should.have.status(404);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('Could not find locations at that custom query');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 404 error if custom city and county query does not exist in database', () => {
+      return chai.request(server)
+      .get('/api/v1/locations?county=Lakewood&city=Denver')
+      .then(response => {
+        response.should.have.status(404);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('Could not find locations at that custom query');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
   });
 
   describe('GET /api/v1/locations/:id', () => {

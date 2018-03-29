@@ -55,28 +55,28 @@ app.post('/authenticate', ( request, response ) => {
 
 //LOCATIONS
 app.get('/api/v1/locations', (request, response) => {
-  const { county } = request.query;
+  const queryKeys = Object.keys(request.query);
 
-  if (!county) {
+  if (queryKeys.length === 0) {
     database('locations').select()
     .then(locations => response.status(200).json(locations))
     .catch(error => {
       return response.status(500).json({ error });
-    })
+    });
   } else {
-    database('locations').where('county', county)
+    database('locations').where(request.query).select('*')
     .then(locations => {
       if(locations.length > 0) {
-        response.status(200).json(locations)
+        response.status(200).json(locations);
       } else {
         response.status(404).json({
-          error: `Could not find locations in county: ${ county }`
+          error: `Could not find locations at that custom query`
         })
       }
     })
     .catch(error => {
-      response.status(500).json({ error })
-    });
+      return response.status(500).json({ error })
+    })
   }
 })
 
