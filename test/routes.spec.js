@@ -186,6 +186,73 @@ describe('API Routes', () => {
     });
   });
 
+  describe('PATCH /api/v1/locations/:id', () => {
+    it('should update an existing location with given information', () => {
+      return chai.request(server)
+      .patch('/api/v1/locations/1')
+      .set({
+        authorization: 'Bearer ' + token
+      })
+      .send({ city: 'Gnarvada' })
+      .then( response => {
+        response.should.have.status(200);
+        response.body.should.have.property('id');
+        response.body.id.should.equal('1');
+      })
+      .catch( error => {
+        throw error;
+      })
+    })
+
+    it('should return a 403 error if a token is not provided', () => {
+      return chai.request(server)
+        .patch('/api/v1/locations/1')
+        .send({ city: 'Gnarvada' })
+        .then(response => {
+          response.should.have.status(403);
+          response.body.should.have.property('error');
+          response.body.error.should.equal('You must be authorized to access this endpoint');
+        })
+        .catch(error => {
+          throw error;
+        });
+    });
+
+    it('should return a 403 error if a token is invalid', () => {
+      return chai.request(server)
+        .patch('/api/v1/locations/1')
+        .set({
+          authorization: 'Bad token'
+        })
+        .send({ city: 'Gnarvada' })
+        .then( response => {
+          response.should.have.status(403);
+          response.body.should.have.property('error');
+          response.body.error.should.equal('Invalid token')
+        })
+        .catch(error => {
+          throw error;
+        });
+    });
+
+    it('should return a 404 if location without given id does not exist', () => {
+      return chai.request(server)
+      .patch('/api/v1/locations/57')
+      .set({
+        authorization: 'Bearer ' + token
+      })
+      .send({ city: 'Gnarvada' })
+      .then( response => {
+        response.should.have.status(404);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('No record with id: 57 to patch');
+      })
+      .catch( error => {
+        throw error;
+      })
+    })
+  })
+
   describe('DELETE /api/v1/locations/:id', () => {
     it('should delete a location from the database', () => {
       return chai.request(server)
@@ -382,6 +449,73 @@ describe('API Routes', () => {
       });
     });
   });
+
+  describe('PATCH /api/v1/sites/:id', () => {
+    it('should update an existing site with given information', () => {
+      return chai.request(server)
+      .patch('/api/v1/sites/1')
+      .set({
+        authorization: 'Bearer ' + token
+      })
+      .send({ name: 'Gnarvada site' })
+      .then(response => {
+        response.should.have.status(200);
+        response.body.should.have.property('id');
+        response.body.id.should.equal('1');
+      })
+      .catch(error => {
+        throw error;
+      })
+    })
+
+    it('should return a 403 error if a token is not provided', () => {
+      return chai.request(server)
+      .patch('/api/v1/sites/1')
+      .send({ name: 'Gnarvada site' })
+      .then(response => {
+        response.should.have.status(403);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('You must be authorized to access this endpoint');
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 403 error if a token is invalid', () => {
+      return chai.request(server)
+      .patch('/api/v1/sites/1')
+      .set({
+        authorization: 'Bad token'
+      })
+      .send({ name: 'Gnarvada site' })
+      .then(response => {
+        response.should.have.status(403);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('Invalid token')
+      })
+      .catch(error => {
+        throw error;
+      });
+    });
+
+    it('should return a 404 if site without given id does not exist', () => {
+      return chai.request(server)
+      .patch('/api/v1/sites/57')
+      .set({
+        authorization: 'Bearer ' + token
+      })
+      .send({ name: 'Gnarvada site' })
+      .then(response => {
+        response.should.have.status(404);
+        response.body.should.have.property('error');
+        response.body.error.should.equal('No record with id: 57 to patch');
+      })
+      .catch(error => {
+        throw error;
+      })
+    })
+  })
 
   describe('DELETE /api/v1/sites/:id', () => {
     it('should delete a site from the database', () => {
