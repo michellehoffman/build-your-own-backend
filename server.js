@@ -109,6 +109,22 @@ app.post('/api/v1/locations', checkAuth, (request, response) => {
   })
 })
 
+app.patch('/api/v1/locations/:id', (request, response) => {
+  const { id } = request.params;
+  const locationChange = request.body;
+  database('locations').where('id', id).update(locationChange)
+  .then( location => {
+    if (location) {
+      response.status(200).json({id});
+    } else {
+      response.status(404).json({ error: `No record with id: ${id} to patch` })
+    }
+  })
+  .catch( error => {
+    response.status(500).json({ error });
+  })
+})
+
 app.delete('/api/v1/locations/:id', checkAuth, (request, response) => {
   const { id } = request.params;
 
@@ -119,8 +135,11 @@ app.delete('/api/v1/locations/:id', checkAuth, (request, response) => {
       if ( location ) {
         response.status(204).json(location);
       } else {
-        response.status(404).json({ error: `No record with id: ${id} to delete`})
+        response.status(404).json({ error: `No record with id: ${id} to delete`});
       }
+    })
+    .catch( error => {
+      response.status(500).json({ error });
     })
   })
 })
