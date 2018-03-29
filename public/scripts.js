@@ -14,7 +14,9 @@ submitButton.addEventListener('click', async (event) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
   });
-
+  
+  document.getElementById('email').value = '';
+  document.getElementById('app-name').value = '';
   const jsonToken = await response.json();
 
   return jsonToken;

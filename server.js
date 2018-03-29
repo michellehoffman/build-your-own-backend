@@ -35,15 +35,22 @@ const checkAuth = (request, response, next) => {
 //AUTHORIZATION
 app.post('/authenticate', ( request, response ) => {
   const payload = request.body;
-
+  const domain = payload.email.substring(payload.email.length - 10);
+  
   for (let requiredParameter of ['email', 'appName'] ) {
     if(!payload[requiredParameter]) {
       return response.status(422).send({ error: `Expected format: {email: <String>, appName: <String>}. You're missing a ${requiredParameter} property`});
     }
   }
-  const token = jwt.sign(payload, process.env.SECRET_KEY);
 
-  response.status(201).json({ token });
+  if ( domain === '@turing.io') {
+    const token = jwt.sign(payload, process.env.SECRET_KEY);
+  
+    return response.status(201).json({ token });
+  } else {
+    response.status(422).json({ error: "Admin privileges not available to this email" });
+  }
+
 });
 
 //LOCATIONS
