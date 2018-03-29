@@ -108,10 +108,12 @@ describe('API Routes', () => {
     it('should create a new location', () => {
       return chai.request(server)
       .post('/api/v1/locations')
+      .set({
+        authorization: 'Bearer ' + token
+      })
       .send({
         city: 'Glenwood Springs',
         county: 'Garfield',
-        token
       })
       .then(response => {
         response.should.have.status(201);
@@ -127,6 +129,9 @@ describe('API Routes', () => {
     it('should return a 422 error if a body property is missing', () => {
       return chai.request(server)
       .post('/api/v1/locations')
+      .set({
+        authorization: 'Bearer ' + token
+      })
       .send({
         // city: 'Glenwood Springs',
         county: 'Garfield',
@@ -148,7 +153,9 @@ describe('API Routes', () => {
     it('should delete a location from the database', () => {
       return chai.request(server)
       .delete('/api/v1/locations/1')
-      .send({ token })
+      .set({
+        authorization: 'Bearer ' + token
+      })
       .then( response => {
         response.should.have.status(204);
       })
@@ -160,7 +167,9 @@ describe('API Routes', () => {
     it('should return a 404 error if no location with that id exists', () => {
       return chai.request(server)
       .delete('/api/v1/locations/50')
-      .send({ token })
+      .set({
+        authorization: 'Bearer ' + token
+      })
       .then(response => {
         response.should.have.status(404);
         response.body.should.be.a('object');
@@ -238,11 +247,13 @@ describe('API Routes', () => {
     it('should create a new site', () => {
       return chai.request(server)
       .post('/api/v1/sites')
+      .set({
+        authorization: 'Bearer ' + token
+      })
       .send({
         name: 'Lakewood Site',
         location_id: '1',
-        info: 'api endpoint',
-        token
+        info: 'api endpoint'
       })
       .then(response => {
         response.should.have.status(201);
@@ -258,10 +269,12 @@ describe('API Routes', () => {
     it('should return a 422 error if a body property is missing', () => {
       return chai.request(server)
       .post('/api/v1/sites')
+      .set({
+        authorization: 'Bearer ' + token
+      })
       .send({
         // name: 'Site',
-        location_id: 1,
-        token
+        location_id: 1
       })
       .then(response => {
         response.should.have.status(422);
@@ -279,7 +292,9 @@ describe('API Routes', () => {
     it('should delete a site from the database', () => {
       return chai.request(server)
       .delete('/api/v1/sites/1')
-      .send({ token })
+      .set({
+        authorization: 'Bearer ' + token
+      })
       .then(response => {
         response.should.have.status(204);
       })
@@ -291,7 +306,9 @@ describe('API Routes', () => {
     it('should return a 404 error if no site with that id exists', () => {
       return chai.request(server)
       .delete('/api/v1/sites/100')
-      .send({ token })
+      .set({
+        authorization: 'Bearer ' + token
+      })
       .then(response => {
         response.should.have.status(404);
         response.body.should.be.a('object');

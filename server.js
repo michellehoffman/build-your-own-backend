@@ -14,7 +14,8 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 const checkAuth = (request, response, next) => {
-  const { token } = request.body;
+  const auth = request.headers.authorization;
+  const token = auth.substring(7);
 
   if (!token) {
     return response.status(403).json({
@@ -109,7 +110,7 @@ app.post('/api/v1/locations', checkAuth, (request, response) => {
   })
 })
 
-app.patch('/api/v1/locations/:id', (request, response) => {
+app.patch('/api/v1/locations/:id', checkAuth, (request, response) => {
   const { id } = request.params;
   const locationChange = request.body;
   database('locations').where('id', id).update(locationChange)
@@ -185,7 +186,7 @@ app.post('/api/v1/sites', checkAuth, (request, response) => {
   .catch(error => response.status(500).json({ error }))
 })
 
-app.patch('/api/v1/sites/:id', (request, response) => {
+app.patch('/api/v1/sites/:id', checkAuth, (request, response) => {
   const { id } = request.params;
   const siteChange = request.body;
   database('sites').where('id', id).update(siteChange)
