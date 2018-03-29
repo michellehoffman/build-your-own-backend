@@ -1,5 +1,7 @@
 # Build Your Own Backend (BYOB)
 
+An API of Colorado superfund locations with links to current status and information on various sites.
+
 To run this repo, clone it down, run ```npm install```, and ```npm start```
 
 ## Endpoints
@@ -150,3 +152,17 @@ Response ```[{ id: <Number>}]```
 
  Response:
 ```[{ id: 8 }]```
+
+### Custom Query
+
+```GET /api/v1/locations?QUERY=QUERYSEARCH```
+
+Parmeters:
+
+```city: <String>``` required or county
+
+```county: <String>``` required or city
+
+Response:
+
+```[{ id: <Number>, city: <String>, county: <String>}]```
