@@ -185,6 +185,22 @@ app.post('/api/v1/sites', checkAuth, (request, response) => {
   .catch(error => response.status(500).json({ error }))
 })
 
+app.patch('/api/v1/sites/:id', (request, response) => {
+  const { id } = request.params;
+  const siteChange = request.body;
+  database('sites').where('id', id).update(siteChange)
+  .then( site => {
+    if (site) {
+      response.status(200).json({ id });
+    } else {
+      response.status(404).json({ error: `No record with id: ${id} to patch` })
+    }
+  })
+  .catch( error => {
+    response.status(500).json({ error });
+  })
+})
+
 app.delete('/api/v1/sites/:id', checkAuth, (request, response) => {
   const { id } = request.params;
 
