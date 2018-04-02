@@ -8,16 +8,18 @@ submitButton.addEventListener('click', async (event) => {
     email,
     appName
   };
-
   const response = await fetch('/authenticate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
   });
+  const key = await response.json();
   
   document.getElementById('email').value = '';
   document.getElementById('app-name').value = '';
-  const jsonToken = await response.json();
+  const newContent = document.createTextNode(key.token); 
+  const display = document.querySelector('.display');
 
-  return jsonToken;
+  display.innerHTML = key.token;
+  return key;
 })
