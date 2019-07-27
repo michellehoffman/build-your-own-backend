@@ -1,6 +1,8 @@
 ### Build Your Own Backend (BYOB)
 Module 4 project | Turing School of Software & Design
 
+---
+
 This is an API of Colorado superfund locations with links to current status and information on various sites.
 
 #### Setup
@@ -19,8 +21,8 @@ Start the app
 npm start
 ```
 
-### Endpoints
-#### Locations
+## Endpoints
+### Locations
 
 ---
 
@@ -77,7 +79,7 @@ Response:
 [{ id: 1 }]
 ```
 
-#### Sites
+### Sites
 
 ---
 
@@ -135,7 +137,7 @@ Response:
 [{ id: 8 }]
 ```
 
-#### Custom Query
+### Custom Query
 
 ---
 
